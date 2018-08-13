@@ -37,6 +37,50 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.jfrog.buildinfo</groupId>
+                <artifactId>artifactory-maven-plugin</artifactId>
+                <version>2.6.1</version>
+                <inherited>false</inherited>
+                <executions>
+                    <execution>
+                        <id>build-info</id>
+                        <goals>
+                            <goal>publish</goal>
+                        </goals>
+                        <configuration>
+                            <deployProperties>
+                                <gradle>awesome</gradle>
+                            </deployProperties>
+                            <artifactory>
+                                <includeEnvVars>true</includeEnvVars>
+                                <envVarsExcludePatterns>*password*,*secret*,*key*,*token*,*passphrase*</envVarsExcludePatterns>
+                                <timeoutSec>60</timeoutSec>
+                            </artifactory>
+                            <publisher>
+                                <contextUrl>{{ARTIFACTORY_CONTEXT_URL}}</contextUrl>
+                                <username>{{ARTIFACTORY_USERNAME}}</username>
+                                <password>{{ARTIFACTORY_PASSWORD}}</password>
+                                <excludePatterns>*-tests.jar</excludePatterns>
+                                <repoKey>{{ARTIFACTORY_RELEASE_REPO_KEY}}</repoKey>
+                                <snapshotRepoKey>{{ARTIFACTORY_SNAPSHOT_REPO_KEY}}</snapshotRepoKey>
+                            </publisher>
+                            <buildInfo>
+                                <buildName>plugin-demo</buildName>
+                                <buildNumber>${buildnumber}</buildNumber>
+                                <buildUrl>http://build-url.org</buildUrl>
+                            </buildInfo>
+                            <licenses>
+                                <autoDiscover>true</autoDiscover>
+                                <includePublishedArtifacts>false</includePublishedArtifacts>
+                                <runChecks>true</runChecks>
+                                <scopes>compile,runtime</scopes>
+                                <violationRecipients>build@organisation.com</violationRecipients>
+                            </licenses>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.9</version>
@@ -69,5 +113,26 @@
             <url>https://github.com/nullin/mvn-repo</url>
         </repository>
     </distributionManagement>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>central</id>
+            <name>bintray-plugins</name>
+            <url>http://jcenter.bintray.com</url>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
