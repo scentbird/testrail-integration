@@ -65,7 +65,7 @@
                                 <snapshotRepoKey>{{ARTIFACTORY_SNAPSHOT_REPO_KEY}}</snapshotRepoKey>
                             </publisher>
                             <buildInfo>
-                                <buildName>plugin-demo</buildName>
+                                <buildName>testrail</buildName>
                                 <buildNumber>${buildnumber}</buildNumber>
                                 <buildUrl>http://build-url.org</buildUrl>
                             </buildInfo>
